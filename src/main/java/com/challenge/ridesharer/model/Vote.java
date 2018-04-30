@@ -7,7 +7,10 @@ import com.challenge.ridesharer.model.audit.DateAudit;
 @Entity
 @Table(name = "votes")
 public class Vote extends DateAudit {
-    @Id
+  
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
