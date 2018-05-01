@@ -74,3 +74,42 @@ CREATE TABLE `votes` (
 
 INSERT IGNORE INTO roles(name) VALUES('ROLE_USER');
 INSERT IGNORE INTO roles(name) VALUES('ROLE_ADMIN');
+
+CREATE TABLE `vehicle` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `registrationNumber` varchar(40) NOT NULL,
+  `vehicleNumber` varchar(10) NOT NULL,
+  `vehicleType` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `rides` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sourceLat` double NOT NULL,
+  `sourceLong` double NOT NULL,
+  `destinationLat` double NOT NULL,
+  `destinationLong` double NOT NULL,
+  `fair` double NOT NULL,
+  `distanceInKM` double NOT NULL,
+  `rating` double NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
+CREATE TABLE `driver` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `ride_id` bigint(20) NOT NULL,
+  `vehicle_id` bigint(20) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_votes_users_id` (`user_id`),
+  KEY `fk_votes_rides_id` (`ride_id`),
+  KEY `fk_votes_vehicle_id` (`vehicle_id`),
+  CONSTRAINT `fk_votes_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_votes_rides_id` FOREIGN KEY (`ride_id`) REFERENCES `rides` (`id`),
+  CONSTRAINT `fk_votes_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`)
+);
